@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
+const errorHandler = require("./utils/errorHandler");
+const authRoutes = require("./routes/authRoutes");
+const fileRoutes = require("./routes/fileRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -15,16 +18,15 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 100,
 });
 app.use("/api/", limiter);
 
-const authRoutes = require("./routes/authRoutes");
-const fileRoutes = require("./routes/fileRoutes");
-
 app.use("/api/auth", authRoutes);
 app.use("/api/file", fileRoutes);
+
+app.use(errorHandler);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

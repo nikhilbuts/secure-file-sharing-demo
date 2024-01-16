@@ -8,7 +8,6 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, password: hashedPassword });
 
-    // Generate and save the token
     const token = await user.generateAuthToken();
 
     res.status(201).json({ user, token });
@@ -35,9 +34,10 @@ const login = async (req, res) => {
       user.password.length
     );
 
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    console.log("isMatch:", isMatch); // Add this line
+    const isMatch = await bcrypt.compare(
+      String(password),
+      String(user.password)
+    );
 
     if (!isMatch) {
       throw new Error("Invalid password");
