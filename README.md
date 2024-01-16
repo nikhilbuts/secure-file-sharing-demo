@@ -45,7 +45,7 @@ This project is a secure file-sharing platform with features such as user authen
 ### Installation
 
 1. Clone the repository: `git clone https://github.com/nikhilbuts/secure-file-sharing-demo.git`
-2. Navigate to the project directory: `cd secure-file-sharing-platform`
+2. Navigate to the project directory: `cd secure-file-sharing-demo`
 3. Install dependencies: `npm install`
 
 ### Running the Application
